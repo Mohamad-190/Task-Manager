@@ -32,6 +32,10 @@ public class Task {
 
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public String getTitle() {
         return title;

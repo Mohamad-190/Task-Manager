@@ -2,6 +2,8 @@ package com.mohamad.taskmanager.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "users")
@@ -14,7 +16,8 @@ public class User {
     @Column(nullable = false)
     private String username;
     private String password;
-
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
     @Enumerated(EnumType.STRING)
     private Role role;
 
