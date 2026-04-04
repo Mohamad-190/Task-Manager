@@ -1,4 +1,4 @@
-package repositories;
+package com.mohamad.taskmanager.repositories;
 
 import com.mohamad.taskmanager.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
