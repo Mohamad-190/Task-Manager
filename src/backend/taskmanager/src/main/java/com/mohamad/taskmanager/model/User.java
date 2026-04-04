@@ -13,7 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     private String password;
     @OneToMany(mappedBy = "user")
@@ -48,5 +48,7 @@ public class User {
         this.username = username;
     }
 
-
+    public int getId() {
+        return Id;
+    }
 }

@@ -89,5 +89,7 @@ public class Task {
         return createdAt;
     }
 
-
+    public int getId() {
+        return Id;
+    }
 }
