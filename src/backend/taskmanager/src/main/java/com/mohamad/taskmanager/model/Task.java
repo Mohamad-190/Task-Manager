@@ -36,6 +36,10 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
 
     public String getTitle() {
         return title;
