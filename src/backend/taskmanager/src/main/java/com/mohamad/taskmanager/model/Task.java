@@ -11,9 +11,6 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, String description, boolean completed, String priority, LocalDate dueDate) {
-    }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +29,14 @@ public class Task {
 
     private LocalDateTime createdAt;
 
+    private LocalDateTime claimedAt;
+
+    private LocalDateTime completedAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role requiredRole;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -39,6 +44,13 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "created_by")
     private User createdBy;
+
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
 
 
     public String getTitle() {
@@ -54,7 +66,7 @@ public class Task {
     }
 
     public String getDescription() {
-        return title;
+        return description;
     }
 
     public void setDescription(String description) {
@@ -87,6 +99,49 @@ public class Task {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public LocalDateTime getClaimedAt() {
+        return claimedAt;
+    }
+
+    public void setClaimedAt(LocalDateTime claimedAt) {
+        this.claimedAt = claimedAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    public Role getRequiredRole() {
+        return requiredRole;
+    }
+
+    public void setRequiredRole(Role requiredRole) {
+        if (requiredRole == null) {
+            throw new IllegalArgumentException("RequiredRole darf nicht null sein");
+        }
+        this.requiredRole = requiredRole;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     public int getId() {

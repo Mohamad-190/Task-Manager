@@ -16,6 +16,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
+    @Column(nullable = false, unique = true)
+    private String email;
+    private String phoneNumber;
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
     @Enumerated(EnumType.STRING)
@@ -50,5 +53,23 @@ public class User {
 
     public int getId() {
         return Id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email darf nicht leer sein");
+        }
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
