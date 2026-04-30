@@ -2,9 +2,11 @@ package com.mohamad.taskmanager.controller;
 
 import com.mohamad.taskmanager.dto.ChangePasswordRequest;
 import com.mohamad.taskmanager.dto.CreateUserRequest;
+import com.mohamad.taskmanager.dto.TaskResponse;
 import com.mohamad.taskmanager.dto.UpdatePhoneRequest;
 import com.mohamad.taskmanager.dto.UserResponse;
 import com.mohamad.taskmanager.model.User;
+import com.mohamad.taskmanager.service.TaskService;
 import com.mohamad.taskmanager.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +21,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final TaskService taskService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TaskService taskService) {
         this.userService = userService;
+        this.taskService = taskService;
     }
 
     @GetMapping
@@ -34,6 +38,12 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public UserResponse getUserById(@PathVariable int id) {
         return UserResponse.from(userService.getUserById(id));
+    }
+
+    @GetMapping("/{id}/tasks")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<TaskResponse> getUserTasks(@PathVariable int id) {
+        return taskService.listAssignedTo(id).stream().map(TaskResponse::from).toList();
     }
 
     @PostMapping
