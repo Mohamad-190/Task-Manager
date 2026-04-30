@@ -14,7 +14,7 @@ import { notifications } from '@mantine/notifications';
 import { isAxiosError } from 'axios';
 
 import { login } from '../api/auth';
-import { setToken } from '../api/client';
+import { setEmail, setRole, setToken } from '../api/client';
 
 interface LoginFormValues {
   email: string;
@@ -29,7 +29,7 @@ export default function LoginPage() {
     initialValues: { email: '', password: '' },
     validate: {
       email: (value) =>
-        /^\S+@\S+\.\S+$/.test(value) ? null : 'Bitte gueltige Email eingeben',
+        /^\S+@\S+\.\S+$/.test(value) ? null : 'Bitte gültige Email eingeben',
       password: (value) =>
         value.length === 0 ? 'Passwort darf nicht leer sein' : null,
     },
@@ -40,6 +40,8 @@ export default function LoginPage() {
     try {
       const res = await login(values);
       setToken(res.token);
+      setRole(res.role);
+      setEmail(res.email);
       navigate('/tasks', { replace: true });
     } catch (err) {
       const message =

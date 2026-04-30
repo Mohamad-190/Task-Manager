@@ -10,4 +10,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     List<Task> findByRequiredRole(Role requiredRole);
 
+    List<Task> findByUser_Id(int userId);
+
 }

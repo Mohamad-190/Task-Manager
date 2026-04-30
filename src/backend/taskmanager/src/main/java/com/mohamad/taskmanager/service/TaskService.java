@@ -33,6 +33,11 @@ public class TaskService {
         return taskRepository.findByRequiredRole(currentUser.getRole());
     }
 
+    public List<Task> listAssignedTo(int userId) {
+        userService.getUserById(userId);
+        return taskRepository.findByUser_Id(userId);
+    }
+
     public Task getForUser(int id, User currentUser) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Task nicht gefunden"));
